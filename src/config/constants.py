@@ -43,9 +43,9 @@ BIRD_COL = RED
 
 #agent
 LR = 0.1
-dx_BINSIZE = 20
-dy_BINSIZE = 35
-vy_BINSIZE = 2
+dx_BINSIZE = 30
+dy_BINSIZE = 50
+vy_BINSIZE = 3
 next_dx_BINSIZE = 100
 next_dy_BINSIZE = 100
 
