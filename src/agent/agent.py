@@ -102,7 +102,7 @@ class Agent:
 
         near_ceiling = 1 if player.y < 50 else 0 #if it is near ceiling to avoid constant suicide
 
-        return (int(dx), int(dy), int(vy), near_ceiling, next_dx, next_dy)
+        return (int(dx), int(dy), int(vy), near_ceiling, int(next_dx), int(next_dy))
 
 
     def get_action(self, state):

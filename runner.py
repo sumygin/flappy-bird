@@ -116,7 +116,7 @@ def main():
 
                 agent.update_q(prev_state, action, new_state, reward, not running)
 
-                if not running:
+                if not running: 
                     if TRAINING: render(screen, screenManager, bird, font, pipes_passed, trials, WIDTH, HEIGHT)
                     agent.die()
 
