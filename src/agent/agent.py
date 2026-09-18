@@ -18,8 +18,8 @@ class Agent:
         self.actions = [False, True]
 
         self.epsilon = EPSILON
-        self.epsilon_min = 0.05
-        self.epsilon_decay = 0.999
+        self.epsilon_min = EPSILON_MIN
+        self.epsilon_decay = EPSILON_DECAY
 
 
     def load_data(self):
@@ -97,8 +97,7 @@ class Agent:
             if q_values[i] == q_max:
                 choices.append(self.actions[i])
 
-        if self.epsilon > self.epsilon_min: #decay epsilon to reduce exploration over time
-            self.epsilon *= self.epsilon_decay
+        
    
         return random.choice(choices)
 
@@ -123,4 +122,7 @@ class Agent:
         return self.table[(state, action)]
 
     def die(self):
+        if self.epsilon > self.epsilon_min: #decay epsilon to reduce exploration over time
+            self.epsilon *= self.epsilon_decay
+        
         self.save_data()

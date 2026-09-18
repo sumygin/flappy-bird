@@ -10,6 +10,7 @@ class Box:
     y:float
     w:float
     h:float
+    passed:bool = False
 
 
 @dataclass
