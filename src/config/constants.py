@@ -8,7 +8,7 @@ SCROLL_SPEED = 15
 #game
 FPS = 60
 
-MODE = "watch" #train, watch, play
+MODE = "train" #train, watch, play
 
 AGENT = MODE in ("train", "watch")
 TRAINING = MODE == "train"
@@ -46,6 +46,8 @@ LR = 0.1
 dx_BINSIZE = 20
 dy_BINSIZE = 35
 vy_BINSIZE = 2
+next_dx_BINSIZE = 100
+next_dy_BINSIZE = 100
 
 EPSILON = 0 if MODE == "watch" else 1
 EPSILON_MIN = 0.01

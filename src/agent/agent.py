@@ -46,41 +46,63 @@ class Agent:
         os.replace(temp_path, path)
 
 
+    def calculate_dx(self, player, obst, binsize):
+        dx = obst.x - player.x
+        dx = clamp(0, 300, dx)
+        return round_to_n(dx, binsize)
+
+
+    def calculate_dy(self, player, obst_top, obst_bt, binsize):
+        bottom_of_top = obst_top.y + obst_top.h
+        top_of_bottom = obst_bt.y
+        middle = 0.5 * (bottom_of_top + top_of_bottom)
+        
+        return round_to_n(middle - player.y,binsize)
+
+
     def determine_state(self, player, player_vy, obstacles):
+        second = False
+        
         if len(obstacles) > 0:
             obst_top = obstacles[0]
             obst_bt = obstacles[1]
 
-            if obst_top.x + obst_top.w < player.x and len(obstacles) > 2:
+            if obst_top.x + obst_top.w < player.x and len(obstacles) > 2: #if we have passed the first obstacle in list
                 obst_top = obstacles[2]
                 obst_bt = obstacles[3]       
 
-            dx = obst_top.x - player.x
-            dx = clamp(0, 300, dx)
-            dx = round_to_n(dx, dx_BINSIZE)
-            
-            bottom_of_top = obst_top.y + obst_top.h
-            top_of_bottom = obst_bt.y
-            middle = 0.5 * (bottom_of_top + top_of_bottom)
-            
-            dy = round_to_n(middle - player.y, dy_BINSIZE)
+                if len(obstacles) > 4:
+                    next_obst_top = obstacles[4]
+                    next_obst_bot = obstacles[5]
+                    second = True
 
-            
-            bottom_of_top = obst_top.y + obst_top.h
-            top_of_bottom = obst_bt.y
-            middle = 0.5*(bottom_of_top + top_of_bottom)
-            
-            dy = round_to_n(middle - player.y,dy_BINSIZE)  #distance to middle of obstacle gap
+            elif len(obstacles) > 2:
+                next_obst_top = obstacles[2]
+                next_obst_bot = obstacles[3]
+                second = True
+
+            dx = self.calculate_dx(player, obst_top, dx_BINSIZE)
+            dy = self.calculate_dy(player, obst_top, obst_bt, dy_BINSIZE)
+
+            if second:
+                next_dx = self.calculate_dx(player, next_obst_top, next_dx_BINSIZE)
+                next_dy = self.calculate_dy(player, next_obst_top, next_obst_bot, next_dy_BINSIZE)
+            else:
+                next_dx = -10000
+                next_dy = -10000
+
 
         else: #if no obstaclesa on screen, resort to default values
             dx = -10000
             dy = -10000
+            next_dx = -10000
+            next_dy = -10000
 
         vy = round_to_n(player_vy,vy_BINSIZE) #player velocity
 
         near_ceiling = 1 if player.y < 50 else 0 #if it is near ceiling to avoid constant suicide
 
-        return (int(dx), int(dy), int(vy), near_ceiling)
+        return (int(dx), int(dy), int(vy), near_ceiling, next_dx, next_dy)
 
 
     def get_action(self, state):
