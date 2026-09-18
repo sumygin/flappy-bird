@@ -17,19 +17,9 @@ def distance_squared(p1:Point, p2:Point):
 
 
 def clamp(ub:float, lb:float, val):
-    result = val
-
-    if ub < lb: #swap if lb and ub are incorrectly arranged
-        temp = ub
-        ub = lb
-        lb = temp
-
-    if val > ub:
-        return ub
-    elif val < lb:
-        return lb
-    else:
-        return val
+    if ub < lb:
+        ub, lb = lb, ub
+    return max(lb, min(val, ub))
     
 
 def ball_box_collides(ball:Circle, box:Box):

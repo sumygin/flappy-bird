@@ -20,10 +20,8 @@ class Bird():
         self.vy += g
 
         self.y += self.vy
-        if self.y < 0:
-            self.vy = 0
 
-        if self.y > self.height - self.r:
+        if self.y > self.height - self.r or self.y < self.r:
             return True #if dies
 
         #apply velocities
@@ -42,3 +40,7 @@ class Bird():
 
     def getBall(self):
         return Circle(x=self.x, y=self.y, r=self.r)
+
+
+    def getVy(self):
+        return self.vy

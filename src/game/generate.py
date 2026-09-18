@@ -53,6 +53,7 @@ class Screen():
 
         if first_obst.x + first_obst.w <= 0:
             self.active_obstacles.pop(0)
+            self.active_obstacles.pop(0)
 
         #move active obstacles
         for obstacle in self.active_obstacles:
