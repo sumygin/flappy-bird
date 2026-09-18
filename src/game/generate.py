@@ -12,6 +12,7 @@ class Box:
     h:float
 
 
+@dataclass
 class Circle:
     #centre
     x:float
@@ -20,17 +21,15 @@ class Circle:
 
 
 def box_to_rect(box:Box):
-    return pygame.rect(box.x, box.y, box.w, box.h)
+    return pygame.Rect(box.x, box.y, box.w, box.h)
 
 
 class Screen():
-    def __init__(self, screen, width:int, height:int):
+    def __init__(self, width:int, height:int):
         self.width = width
         self.height = height
 
         self.timesteps_since_obstacle = 0
-
-        self.screen = screen
 
         self.active_obstacles = []
         #active_obstacles is a queue of the obstacles on the screen. every timestep they are moved
@@ -43,8 +42,11 @@ class Screen():
     def update(self):
         #if needed, add new obstacle at right edge
 
-        if self.timesteps_since_obstacle > OBSTACLE_FREQ:
+        if self.timesteps_since_obstacle > OBSTACLE_FREQ or not self.active_obstacles:
             self.create_obstacle()
+            self.timesteps_since_obstacle = 0
+        else:
+            self.timesteps_since_obstacle += 1
 
         #delete obstacle off-screen, NOTE: only does one at a time
         first_obst = self.active_obstacles[0]
@@ -80,12 +82,12 @@ class Screen():
         pass
 
 
-    def render_bg(self):
-        pygame.fill(BG_COL)
+    def render_bg(self, screen):
+        screen.fill(BG_COL)
 
 
-    def render(self):
+    def render(self, screen):
         #draw all boxes
 
         for obst in self.active_obstacles:
-            pygame.draw.rect(surface=self.screen, color=OBST_COL, rect=box_to_rect(obst))
+            pygame.draw.rect(surface=screen, color=OBST_COL, rect=box_to_rect(obst))

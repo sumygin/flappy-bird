@@ -1,7 +1,7 @@
 import math
 from dataclasses import dataclass
 
-from game.generate import Ball, Box
+from game.generate import Circle, Box
 
 @dataclass
 class Point:
@@ -32,7 +32,7 @@ def clamp(ub:float, lb:float, val):
         return val
     
 
-def ball_box_collides(ball:Ball, box:Box):
+def ball_box_collides(ball:Circle, box:Box):
     #clamp ball location to box
      
     clamped_x = clamp(
