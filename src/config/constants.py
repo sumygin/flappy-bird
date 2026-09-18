@@ -1,0 +1,4 @@
+g = 9.8
+
+JUMP_STRENGTH = 20
+SCROLL_SPEED = 10
