@@ -40,16 +40,56 @@ BLUE = (0, 0, 255)
 BG_COL = BLACK
 OBST_COL = WHITE
 BIRD_COL = RED
+#physics
+g = 1
+
+#envt
+JUMP_STRENGTH = 10
+SCROLL_SPEED = 15
+
+#game
+FPS = 60
+
+MODE = "watch" #train, watch, play
+
+AGENT = MODE in ("train", "watch")
+TRAINING = MODE == "train"
+
+#obstacles
+OBSTACLE_FREQ = 30
+
+OBSTACLE_MIN_GAP_HEIGHT = 300
+OBSTACLE_MAX_GAP_HEIGHT = 300
+
+OBSTACLE_MIN_WIDTH = 50
+OBSTACLE_MAX_WIDTH = 50
+
+OBSTACLE_GAP_PADDING = 100
+
+#bird
+BIRD_X = 100
+BIRD_RAD = 10
+
+#colours
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREY = (50, 50, 50)
+
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+BG_COL = BLACK
+OBST_COL = WHITE
+BIRD_COL = RED
 
 #agent
 LR = 0.1
-dx_BINSIZE = 30
-dy_BINSIZE = 50
-vy_BINSIZE = 3
-next_dx_BINSIZE = 100
-next_dy_BINSIZE = 100
+dx_BINSIZE = 20
+dy_BINSIZE = 35
+vy_BINSIZE = 2
 
-EPSILON = 0 if MODE == "watch" else 0.5
+EPSILON = 0 if MODE == "watch" else 1
 EPSILON_MIN = 0.01
 EPSILON_DECAY = 0.999
 
