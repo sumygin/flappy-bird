@@ -14,7 +14,7 @@ AGENT = MODE in ("train", "watch")
 TRAINING = MODE == "train"
 
 #obstacles
-OBSTACLE_FREQ = 30
+OBSTACLE_FREQ = 30 #default 30 
 
 OBSTACLE_MIN_GAP_HEIGHT = 300
 OBSTACLE_MAX_GAP_HEIGHT = 300
@@ -49,7 +49,7 @@ vy_BINSIZE = 3
 next_dx_BINSIZE = 100
 next_dy_BINSIZE = 100
 
-EPSILON = 0 if MODE == "watch" else 0.4
+EPSILON = 0 if MODE == "watch" else 0
 EPSILON_MIN = 0.01
 EPSILON_DECAY = 0.999
 
