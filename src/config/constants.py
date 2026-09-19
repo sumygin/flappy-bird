@@ -2,13 +2,13 @@
 g = 1
 
 #envt
-JUMP_STRENGTH = 10
+JUMP_STRENGTH = 20
 SCROLL_SPEED = 15
 
 #game
 FPS = 60
 
-MODE = "watch" #train, watch, play
+MODE = "play" #train, watch, play
 
 AGENT = MODE in ("train", "watch")
 TRAINING = MODE == "train"
@@ -49,7 +49,7 @@ vy_BINSIZE = 3
 next_dx_BINSIZE = 100
 next_dy_BINSIZE = 100
 
-EPSILON = 0 if MODE == "watch" else 0
+EPSILON = 0 if MODE == "watch" else 0.5
 EPSILON_MIN = 0.01
 EPSILON_DECAY = 0.999
 

@@ -51,6 +51,8 @@ def main():
         screenManager = Screen(width=WIDTH, height=HEIGHT)
         bird = Bird(x=BIRD_X, y=HEIGHT*0.5, r=BIRD_RAD, height=HEIGHT)
 
+        key_held = False
+
         
 
         while running:
@@ -60,9 +62,14 @@ def main():
                 if event.type == pygame.QUIT:
                     running = False
                 
-                if not AGENT and event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        bird.jump()
+                if not AGENT:
+                    if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+                        key_held = False
+                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        key_held = True
+
+            if key_held:
+                bird.jump()
 
             #run action through agent
             if AGENT:

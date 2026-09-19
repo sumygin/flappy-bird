@@ -1,5 +1,5 @@
-from config.constants import g, JUMP_STRENGTH, BIRD_COL
-from game.collision import clamp
+from config.constants import g, JUMP_STRENGTH, BIRD_COL, TRAINING, SCROLL_SPEED, WHITE
+from game.collision import clamp, Point
 from game.generate import Circle
 
 import math, pygame
@@ -14,10 +14,10 @@ class Bird():
 
         self.height = height
 
+        self.trail = []
+
 
     def update(self):
-        #apply gravity
-        self.vy += g
 
         self.y += self.vy
 
@@ -27,6 +27,25 @@ class Bird():
         #apply velocities
         self.y = clamp(ub=self.r, val=self.y, lb=self.height-self.r) #make sure doesnt go off-screen
 
+        self.vy = JUMP_STRENGTH
+
+
+        if not TRAINING:
+            last_point_index = 0
+
+            for i in range(len(self.trail)):
+                point = self.trail[i]
+                
+
+                if point.x < 0:
+                    last_point_index = i
+                else:
+                    point.x -= SCROLL_SPEED
+
+            self.trail = self.trail[last_point_index:]
+
+            self.trail.append(Point(self.x, self.y))
+
         return False
 
 
@@ -35,7 +54,12 @@ class Bird():
 
 
     def render(self, screen):
+        if not TRAINING:
+            for point in self.trail:
+                pygame.draw.circle(surface=screen, color=WHITE, center=(point.x, point.y), radius=self.r/2)
+        
         pygame.draw.circle(surface=screen, color=BIRD_COL, center=(self.x, self.y), radius=self.r)
+
 
 
     def getBall(self):
