@@ -8,7 +8,7 @@ SCROLL_SPEED = 15
 #game
 FPS = 60
 
-MODE = "play" #train, watch, play
+MODE = "watch" #train, watch, play
 
 AGENT = MODE in ("train", "watch")
 TRAINING = MODE == "train"

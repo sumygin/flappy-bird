@@ -60,9 +60,7 @@ class Agent:
         return round_to_n(middle - player.y,binsize)
 
 
-    def determine_state(self, player, player_vy, obstacles):
-        second = False
-        
+    def determine_state(self, player, player_vy, obstacles):        
         if len(obstacles) > 0:
             obst_top = obstacles[0]
             obst_bt = obstacles[1]
@@ -71,38 +69,18 @@ class Agent:
                 obst_top = obstacles[2]
                 obst_bt = obstacles[3]       
 
-                if len(obstacles) > 4:
-                    next_obst_top = obstacles[4]
-                    next_obst_bot = obstacles[5]
-                    second = True
-
-            elif len(obstacles) > 2:
-                next_obst_top = obstacles[2]
-                next_obst_bot = obstacles[3]
-                second = True
-
             dx = self.calculate_dx(player, obst_top, dx_BINSIZE)
             dy = self.calculate_dy(player, obst_top, obst_bt, dy_BINSIZE)
-
-            if second:
-                next_dx = self.calculate_dx(player, next_obst_top, next_dx_BINSIZE)
-                next_dy = self.calculate_dy(player, next_obst_top, next_obst_bot, next_dy_BINSIZE)
-            else:
-                next_dx = -10000
-                next_dy = -10000
-
 
         else: #if no obstaclesa on screen, resort to default values
             dx = -10000
             dy = -10000
-            next_dx = -10000
-            next_dy = -10000
 
         vy = round_to_n(player_vy,vy_BINSIZE) #player velocity
 
         near_ceiling = 1 if player.y < 50 else 0 #if it is near ceiling to avoid constant suicide
 
-        return (int(dx), int(dy), int(vy), near_ceiling, int(next_dx), int(next_dy))
+        return (int(dx), int(dy), int(vy), near_ceiling)
 
 
     def get_action(self, state):
